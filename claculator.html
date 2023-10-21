@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCIENTIFIC CALCULATOR</title>
+</head>
+<body>
+    <style>
+        .calculator {
+            width: 400px;
+            background-color: blue;
+            color: black;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 body{
+            text-align: center;
+        }
+
+        .fake-screen {
+            background-color: #000;
+            color: #fff;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: right;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        button.colorful {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            font-weight: bold;
+        }
+
+        .equals-button {
+            grid-column: span 4;
+        }
+    </style>
+    </head>
+<body>
+    <div class="calculator">
+        <div class="table-container">
+            <h2>SCIENTIFIC CALCULATOR</h2>
+            <table>
+                <tr>
+                    <th colspan="4">Expression</th>
+                </tr>
+                <tr>
+                    <td id="expression" colspan="4">Enter your expression:</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="4">Result</th>
+                </tr>
+                <tr>
+                    <td id="result" colspan="4">0</td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-container">
+            <button onclick="addToInput('7')">7</button>
+            <button onclick="addToInput('8')">8</button>
+            <button onclick="addToInput('9')">9</button>
+            <button onclick="addToInput('/')">÷</button>
+            <button onclick="addToInput('4')">4</button>
+            <button onclick="addToInput('5')">5</button>
+            <button onclick="addToInput('6')">6</button>
+            <button onclick="addToInput('*')">x</button>
+            <button onclick="addToInput('1')">1</button>
+            <button onclick="addToInput('2')">2</button>
+            <button onclick="addToInput('3')">3</button>
+            <button onclick="addToInput('-')">-</button>
+            <button onclick="addToInput('0')">0</button>
+            <button onclick="addToInput('.')">.</button>
+            <button onclick="clearInput()">C</button>
+            <button onclick="addToInput('+')">+</button>
+            <button class="colorful equals-button" onclick="calculate()">=</button>
+            <button onclick="addToInput('**')">^</button> 
+            <button onclick="calculateSin()">sin</button>
+            <button onclick="calculateCos()">cos</button>
+            <button onclick="calculateTan()">tan</button>
+            <button onclick="calculateSqrt()">√</button>
+            <button onclick="calculateLog()">log</button>
+            <button onclick="calculateExp()">e^x</button>
+            <button onclick="calculateFactorial()">!</button>
+            <button onclick="addToInput('(')">(</button>
+            <button onclick="addToInput(')')">)</button>
+            <button onclick="addToInput('%')">%</button>
+            <button class="colorful" onclick="clearAll()">AC</button>
+        </div>
+    </div>
+    <script>
+        let expression = ''; 
+        let resultShown = false;
+
+        function addToInput(value) {
+            if (resultShown) {
+                clearInput();
+                resultShown = false;
+            }
+            const currentValue = document.getElementById("expression").innerHTML;
+
+            if (currentValue === 'Enter your expression:' || currentValue === 'Invalid Expression') {
+                document.getElementById("expression").innerHTML = value;
+                expression = value;
+            } else {
+                document.getElementById("expression").innerHTML += value;
+                expression += value;
+            }
+        }
+        function calculate() {
+            try {
+                const result = eval(expression);
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function clearInput() {
+            document.getElementById("expression").innerHTML = '';
+            expression = '';
+        }
+        function clearAll() {
+            document.getElementById("expression").innerHTML = 'Enter your expression:';
+            document.getElementById("result").innerHTML = '0';
+            expression = '';
+            resultShown = false;
+        }
+        function calculateSin() {
+            try {
+                const result = Math.sin(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateCos() {
+            try {
+                const result = Math.cos(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateTan() {
+            try {
+                const result = Math.tan(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateSqrt() {
+            try {
+                const result = Math.sqrt(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateLog() {
+            try {
+                const result = Math.log(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateExp() {
+            try {
+                const result = Math.exp(eval(expression));
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+        function calculateFactorial() {
+            try {
+                const num = eval(expression);
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                document.getElementById("result").innerHTML = result.toFixed(4);
+                expression = result.toString(); 
+                document.getElementById("expression").innerHTML = '';
+                resultShown = true;
+            } catch (error) {
+                document.getElementById("result").innerHTML = "Error";
+                document.getElementById("expression").innerHTML = "Invalid Expression";
+                expression = '';
+            }
+        }
+    </script>
+</body>
+</html>
+        
